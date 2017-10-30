@@ -44,6 +44,28 @@ class Alternatif extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function ajax_select(){
+        error_reporting(0);
+        $list = $this->alternatif->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $alternatif) {
+            $no++;
+            $row = array();
+            $row['id_alternatif'] = $alternatif->id_alternatif;
+            $row['nama_alternatif'] = $alternatif->nama_alternatif;
+ 
+            //add html for action 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "data" => $data,
+                );
+        //output to json format
+        echo json_encode($output);
+    }
+
     public function ajax_edit($id)
     {
         $data = $this->alternatif->get_by_id($id);
